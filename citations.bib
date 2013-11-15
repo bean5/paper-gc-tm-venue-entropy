@@ -1,181 +1,238 @@
+% This is annote.bib
+% Author: Michael Bean
+% The order of the following entries is irrelevant. They will be sorted according to the
+% bibliography style used.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 %@string{jgr = "J.~Geophys.~Res."}
+
 @Book{wordnet_1998,
-	title = {WordNet: An Electronic Lexical Database},
-	author = {Christiane Fellbaum},
-	year = {1998},
-	publisher = {Bradford Books},
+  title = {WordNet: An Electronic Lexical Database},
+  author = {Christiane Fellbaum},
+  year = {1998},
+  publisher = {Bradford Books},
 }
 
+@ARTICLE{hilton-2008-intertext-abinadi,
+  AUTHOR  = {Hilton III, John},
+  YEAR    = {2008},
+  TITLE   = {Textual Similarities in the Words of Abinadi and Alma’s Counsel to Corianton},
+  URL     = {http://www.johnhiltoniii.com/wp-content/uploads/2008/10/51.2-HiltonIII-Textual-Similarities.pdf}
+}
 
-@article{weka_2009,
-	author = {Hall, Mark and Frank, Eibe and Holmes, Geoffrey and Pfahringer, Bernhard and Reutemann, Peter and Witten, Ian H.},
-	title = {The WEKA data mining software: an update},
-	journal = {SIGKDD Explor. Newsl.},
-	issue_date = {June 2009},
-	volume = {11},
-	number = {1},
-	month = nov,
-	year = {2009},
-	issn = {1931-0145},
-	pages = {10--18},
-	numpages = {9},
-	url = {http://doi.acm.org/10.1145/1656274.1656278},
-	doi = {10.1145/1656274.1656278},
-	acmid = {1656278},
-	publisher = {ACM},
-	address = {New York, NY, USA},
+@ARTICLE{hilton_2008_intertext_psalms,
+  AUTHOR  = {Hilton III, John},
+  YEAR    = {2008},
+  TITLE   = {Old Testament Psalms in the Book of Mormon},
+  URL     = {http://www.johnhiltoniii.com/wp-content/uploads/2013/10/Hilton-Old-Testament-Psalms-in-the-Book-of-Mormon-Final.pdf}
+}
+
+@ONLINE{github-bean5-porter7,
+  AUTHOR  = {C.J. van Rijsbergen and S.E. Robertson and M.F. Porter},
+  TITLE   = {Java 7 Port of Porter Stemmer},
+  Month = oct,
+  Year = {2013},
+  NOTE = "[Online; Accessed on 2013-10-24; Ported by Michael Bean]",
+  URL = {https://github.com/~bean5/Java-Porter-Stemmer}
+}
+
+@ONLINE{mormon.org-rs,
+  AUTHOR  = {Mormon.org},
+  TITLE   = {What is the Relief Society?},
+  Month = oct,
+  Year = {2013},
+  NOTE = "[Online; Accessed on 2013-10-24]",
+  URL = {http://mormon.org/faq/relief-society}
+}
+
+@misc{lucene:luke,
+  AUTHOR  = {},
+  TITLE   = {Luke - Lucene Index Toolbox},
+  Month = nov,
+  Year = "2013",
+  NOTE = "[Online; Accessed on 2013-11-14]",
+  URL = "http://code.google.com/p/luke/"
+}
+
+@misc{wiki:tf-idf,
+  author = "Wikipedia",
+  title = "Lucene --- Wikipedia{,} The Free Encyclopedia",
+  year = "2013",
+  url = "http://en.wikipedia.org/w/index.php?title=Lucene&oldid=575842086",
+  note = "[Online; accessed 14-November-2013]"
+}
+
+@article{Blei:2003:LDA:944919.944937,
+  author = {Blei, David M. and Ng, Andrew Y. and Jordan, Michael I.},
+  title = {Latent Dirichlet Allocation},
+  journal = {J. Mach. Learn. Res.},
+  issue_date = {3/1/2003},
+  volume = {3},
+  month = mar,
+  year = {2003},
+  issn = {1532-4435},
+  pages = {993--1022},
+  numpages = {30},
+  url = {http://dl.acm.org/citation.cfm?id=944919.944937},
+  acmid = {944937},
+  publisher = {JMLR.org},
 } 
 
-@proceeding{lund_binarization,
-	author = {Lund, William B. and Kennard, Douglas J. and Ringger, Eric K.},
-	title = {Combining multiple thresholding binarization values to improve OCR output},
-	journal = {Proc. SPIE},
-	volume = {8658},
-	number = {},
-	pages = {86580R-86580R-11},
-	abstract = {
-	For noisy, historical documents, a high optical character recognition (OCR) word error rate (WER) can render the OCR
-	text unusable. Since image binarization is often the method used to identify foreground pixels, a body of research seeks
-	to improve image-wide binarization directly. Instead of relying on any one imperfect binarization technique, our method
-	incorporates information from multiple simple thresholding binarizations of the same image to improve text output. Using
-	a new corpus of 19th century newspaper grayscale images for which the text transcription is known, we observe WERs of
-	13.8% and higher using current binarization techniques and a state-of-the-art OCR engine. Our novel approach combines
-	the OCR outputs from multiple thresholded images by aligning the text output and producing a lattice of word alternatives
-	from which a lattice word error rate (LWER) is calculated. Our results show a LWER of 7.6% when aligning two threshold
-	images and a LWER of 6.8% when aligning five. From the word lattice we commit to one hypothesis by applying the
-	methods of Lund et al. (2011) achieving an improvement over the original OCR output and a 8.41% WER result on this
-	data set.
-	},
-	year = {2013},
-	doi = {10.1117/12.2006228},
-	URL = { http://dx.doi.org/10.1117/12.2006228},
-	eprint = {}
+@MISC{Blei06correlatedtopic,
+  author  = {David M. Blei, John D. Lafferty},
+  title   = {Correlated Topic Models},
+  year    = {2006},
+  url     = {http://machinelearning.wustl.edu/mlpapers/paper_files/NIPS2005_774.pdf},
+  abstract  = {Topic models, such as latent Dirichlet allocation (LDA), can be useful tools for the statistical analysis of document collections and other discrete data. The LDA model assumes that the words of each document arise from a mixture of topics, each of which is a distribution over the vocabulary. A limitation of LDA is the inability to model topic correlation even though, for example, a document about genetics is more likely to also be about disease than x-ray astronomy. This limitation stems from the use of the Dirichlet distribution to model the variability among the topic proportions. In this paper we develop the correlated topic model (CTM), where the topic proportions exhibit correlation via the logistic normal distribution [1]. We derive a mean-field variational inference algorithm for approximate posterior inference in this model, which is complicated by the fact that the logistic normal is not conjugate to the multi-nomial. The CTM gives a better fit than LDA on a collection of OCRed articles from the journal Science. Furthermore, the CTM provides a natural way of visualizing and exploring this and other unstructured data
+sets.},
+  annote = {LDA has it's limitations, including ``the inability to model topic correlation...This limitation stems from the use of the Dirichlet distribution to model the variability among thetopic proportions.'' This paper deploys and demonstrates the benefits of a new correlated topic model (CTM), ``where the topic proportions exhibit correlation via the logistic normal distribution.'' ``The CTM gives a better fit than LDA on ... OCRed articles'' as well as a ``natural way of visualizing and exploring this [even on] unstructured datasets.''
+
+The CTM gives a better fit than LDA on a collection of OCRed articles from the journal Science. Furthermore, the CTM provides a natural way of visualizing and exploring this and other unstructured datasets.}
 }
 
-@ARTICLE{hilton_2012,
-   AUTHOR  = {Dr. John Hilton III},
-   YEAR    = {2012},
-   TITLE   = {...},
-   JOURNAL = {},
-   VOLUME  = {1},
-   NUMBER  = {1},
-   PAGES   = {1}
+@book{Blei2007Handbook,
+  editor  = {}, 
+  author  = {David M. Blei},
+  booktitle = {Introduction to Probabilistic Topic Models},
+  title = {Introduction to Probabilistic Topic Models},
+  publisher = {},
+  address = {},
+  year    = 2007,
+  url     = {http://www.cs.princeton.edu/~blei/papers/Blei2011.pdf},
+  abstract= {Probabilistic topic models are a suite of algorithms whose aim is to discover the hidden thematic structure in large archives of documents. In this article, we review the main ideas of this field, survey the current state-of-the-art, and describe some promisingfuture directions. We first describe latent Dirichlet allocation (LDA) [8], which is the simplest kind of topic model. We discuss its connections to probabilistic modeling,and describe two kinds of algorithms for topic discovery. We then survey the growing body of research that extends and applies topic models in interesting ways. These extensions have been developed by relaxing some of the statistical assumptions of LDA, incorporating meta-data into the analysis of the documents, and using similar kinds of models on a diversity of data types such as social networks, images and genetics. Finally, we give our thoughts as to some of the important unexplored directions for topic modeling. These include rigorous methods for checking models built for data exploration, new approaches to visualizing text and other high dimensional data, and moving beyond traditional information engineering applications towards using topic models for more scientific ends.},
+  annote = {This handbook is 16 pages long and covers an introduction to the suite of algorithms known as Probabilistic topic models whose ``aim is to discover the hidden thematic structure in large archives of documents.'' This survey includes the current state-of-the-art, and describe some promising future directions....LDA...and describe two kinds of algorithms for topic discovery. We then survey the growing body of research that extends and applies topic models in interesting ways. These extensions have been developed by relaxing some of the statistical assumptions of LDA, incorporating meta-data into the analysis of the documents, and using similar kinds of models on a diversity of data types such as social networks, images and genetics.'' Future directions are also described including ``rigorous methods for checking models built for data exploration, new approaches to visualizing text..., and moving beyond traditional information engineering applications towards using topic models for more scientific ends.''}
 }
 
-@ARTICLE{Nuckolls,
-   AUTHOR  = {Janis B. Nuckolls},
-   YEAR    = {1996},
-   TITLE   = {Sounds like Life: Sound-Symbolic Grammar, Performance, and Cognition in Pastaza},
-   JOURNAL = {}
+@MISC{Blei2006Dynamic,
+  author = {David M. Blei and John D. Lafferty},
+  title     = {Dynamic Topic Models},
+  year      = {2006},
+  url    = {http://dl.acm.org/ft_gateway.cfm?id=1143859&ftid=364240&dwn=1&CFID=251978667&CFTOKEN=17214624},
+  abstract  = {A family of probabilistic time series models is developed to analyze the time evolution of topics in large document collections. The approach is to use state space models on the natural parameters of the multinomial distributions that represent the topics. Variational approximations based on Kalman filters and nonparametric wavelet regression are developed to carry out approximate posterior inference over the latent topics. In addition to giving quantitative, predictive models of sequential corpus, dynamic topic models provide a qualitative window into the contents of a large document collection. The models are demonstrated by analyzing the OCR’ed archives of the journal Science from 1880 through 2000.},
+  annote = {``A family of probabilistic time series models is developed to analyze the time evolution of topics in large document collections....In addition to giving quantitative, predictive models of sequential corpus, dynamic topic models provide a qualitative window into the contents of a large document collection.'' The models are by analyzing 120 120 years of journals.}
 }
 
-@ARTICLE{Quechua,
-   AUTHOR  = {Janis B. Nuckolls},
-   YEAR    = {},
-   TITLE   = {Quechua},
-   JOURNAL = {Oxford studies in anthropological linguistics},
-   VOLUME  = {2}
+@INPROCEEDINGS{Newman10automaticevaluation,
+  author = {David Newman and Jey Han Lau and Karl Grieser and Timothy Baldwin},
+  title     = {Automatic evaluation of topic coherence},
+  booktitle = {In NAACL-HLT},
+  year      = {2010},
+  url    = {http://aclweb.org/anthology/N/N10/N10-1012.pdf},
+  abstract  = {This paper introduces the novel task of topic coherence evaluation, whereby a set of words, as generated by a topic model, is rated for coherence or interpretability. We apply a range of topic scoring models to the evaluation task, drawing on WordNet, Wikipedia and the Google search engine, and existing research on lexical similarity/relatedness. In comparison with human scores for a set of learned topics over two distinct datasets, we show a simple co-occurrence measure based on point-wise mutual information over Wikipedia data is able to achieve results for the task at or nearing the level of inter-annotator correlation, and that other Wikipedia-based lexical relatedness methods also achieve strong results. Google produces strong, if less consistent, results, while our results over WordNet are patchy at best.},
+  annote = {``This paper introduces the novel task of topic coherence evaluation, whereby a set of words, as generated by a topic model, is rated for coherence or interpretability....In comparison with human scores for a set of learned topics over two distinct datasets, we show a simple co-occurrence measure based on point-wise mutual information over Wikipedia data is able to achieve results for the task at or nearing the level of inter-annotator correlation.}
 }
 
-@BOOK{UpDown,
-   AUTHOR  = {Sue Lindner},
-   YEAR    = {1982},
-   TITLE   = {What Goes Up Doesn’t Necessarily Come Down: The Ins and outs of Opposites},
-   PUBLISHER   = {New York: Oxford University Press}
+@InProceedings{hall-jurafsky-manning:2008:EMNLP,
+  author    = {Hall, David  and  Jurafsky, Daniel and  Manning, Christopher D.},
+  title     = {Studying the History of Ideas Using Topic Models},
+  booktitle = {Proceedings of the 2008 Conference on Empirical Methods in Natural Language Processing},
+  month     = {October},
+  year      = {2008},
+  address   = {Honolulu, Hawaii},
+  publisher = {Association for Computational Linguistics},
+  pages     = {363--371},
+  url       = {http://www.aclweb.org/anthology/D08-1038},
+  abstract  = {How can the development of ideas in a scientific field be studied over time? We apply unsupervised topic modeling to the ACL Anthology to analyze historical trends in the field of Computational Linguistics from 1978 to 2006. We induce topic clusters using Latent Dirichlet Allocation, and examine the strength of each topic over time. Our methods find trends in the field including the rise of probabilistic methods starting in 1988, a steady increase in applications, and a sharp decline of research in semantics and understanding between 1978 and 2001, possibly rising again after 2001. We also introduce a model of the diversity of ideas, topic entropy, using it to show that COLING is a more diverse conference than ACL, but that both conferences as well as EMNLP are becoming broader over time. Finally, we apply Jensen-Shannon divergence of topic distributions to show that all three conferences are converging in the topics they cover. },
+  annote = {``We apply unsupervised topic modeling to the ACL Anthology to analyze historical trends in the field of Computational Linguistics from 1978 to 2006. We induce topic clusters using Latent Dirichlet Allocation, and examine the strength of each topic over time...We also introduce a model of the diversity of ideas, \textit{topic entropy}'' then use it empirically to show that some topics in a field are more or less diverse.  When then ``apply Jensen-Shannon divergence of topic distributions to show that ... conferences are converging in the topics they cover.''}
 }
 
-@BOOK{Lakoff_CogModels,
-   AUTHOR  = {George Lakoff and Mark Johnson},
-   YEAR    = {1999},
-   TITLE   = {Concepts: core readings},
-   CHAPTER = {Cognitive Models and Prototype Theory},
-   PUBLISHER   = {}
+@inproceedings{Herring:2006:Visualizing,
+  abstract  = {In this paper we describe a technique for analyzing textual conversations, Dynamic Topic Analysis, and a tool, VisualDTA, for automatically creating visualizations of data coded according to this technique},
+  author    = {Herring, S. C. and Kurtz, A. J.},
+  journal   = {Proceedings of CHI'06},
+  keywords  = {file-import-08-06-06, webanalysis},
+  posted-at = {2008-06-06 23:24:43},
+  priority  = {2},
+  publisher = {ACM Press},
+  title     = {Visualizing Dynamic Topic Analysis},
+  year      = {2006},
+  url       = {http://ella.slis.indiana.edu/~herring/chi06.pdf},
+  abstract  = {In this paper we describe a technique for analyzing textual conversations, Dynamic Topic Analysis, and a tool, VisualDTA, for automatically creating visualizations of data coded according to this technique.},
+  annote = {``In this paper we describe a technique for analyzing textual conversations, Dynamic Topic Analysis, and a tool, VisualDTA, for automatically creating visualizations of data coded according to this technique.''}
 }
 
-@ONLINE{Brewer,
-   AUTHOR  = {Larry Brewer},
-   TITLE   = {Synonym.Org},
-   Month = dec,
-   Year = {2010},
-   NOTE = "Accessed on 2012-12-12",
-   url = {http://www.synonym.org/}
+@InProceedings{Hindle_whatshot,
+  author    = {Abram Hindle and Michael W. Godfrey and Richard C. Holt},
+  title     = {What's Hot and What's Not: Windowed Developer Topic Analysis},
+  year      = {2009},
+  month     = {},
+  pages     = {339-348},
+  publisher = {International Conference on Software Maintenance - ICSM},
+  url       = {http://swag.uwaterloo.ca/~ahindle/pubs/hindle09icsm.pdf},
+  abstract  = {As development on a software project progresses, developers shift their focus between different topics and tasks many times. Managers and newcomer developers often seek ways of understanding what tasks have recently been worked on and how much effort has gone into each; for example, a manager might wonder what unexpected tasks occupied their team’s attention during a period when they were supposed to have been implementing a set of new features. Tools such as Latent Dirichlet Allocation (LDA) and Latent Semantic Indexing (LSI) can be used to analyze commit log comments over the entire lifetime of a project.Previous work on developer topic analysis has leveraged these tools to associate commit log comments with independent topics extracted from these commit log comments. In this paper, we use LDA to analyze periods, such as months,within a project’s lifetime to create a time-windowed model of changing development topics. We propose visualizations of this model that allows us to explore the evolving stream of topics of development occurring over time. We demonstrate that windowed topic analysis offers advantages over topic analysis applied to a project’s lifetime because many topics are quite local.},
+  annote = {Software project stakeholders seek ways to understand their software better. This work shows that ``[t]ools such as Latent Dirichlet Allocation (LDA) and Latent Semantic Indexing (LSI) can be used to analyze commit log comments over the entire lifetime of a project.... In this paper, we use LDA to analyze periods, such as months,within a project’s lifetime to create a time-windowed model of changing development topics.'' Visualizations are proposed for this variation of the topic model. Advantages of this analysis of a project's lifetime are demonstrated.
+
+Although the texts are far removed from the type of texts that I will encounter, the fact that this incorporates an interesting approach to visualizing time-windows models of a project is intriguing.}
 }
 
-@ONLINE{lds.org,
-   AUTHOR  = {LDS.org},
-   TITLE   = {Journal of Discourses},
-   Month = oct,
-   Year = {2013},
-   NOTE = "Accessed on 2013-10-24",
-   URL = {http://www.lds.org/topics/journal-of-discourses}
+@InProceedings{asgari-chappelier:2013:CLfL,
+  author    = {Asgari, Ehsaneddin  and  Chappelier, Jean-Cedric},
+  title     = {Linguistic Resources \& Topic Models for the Analysis of Persian Poems},
+  booktitle = {Proceedings of the Workshop on Computational Linguistics for Literature},
+  month     = {June},
+  year      = {2013},
+  address   = {Atlanta, Georgia},
+  publisher = {Association for Computational Linguistics},
+  pages     = {23--31},
+  url       = {http://www.aclweb.org/anthology/W13-1404},
+  abstract  = {This paper describes the usage of Natural Language Processing tools, mostly probabilistic topic modeling, to study semantics (word correlations) in a collection of Persian poems consisting of roughly 18k poems from 30 different poets. For this study, we put a lot of effort in the preprocessing and the development of a large scope lexicon supporting both modern and ancient Persian. In the analysis step,we obtained very interesting and meaningful results regarding the correlation between poets and topics, their evolution through time,as well as the correlation between the topics and the metre used in the poems. This work should thus provide valuable results to literature researchers, especially for those working on stylistics or comparative literature.},
+  annote = {``This paper describes the usage of Natural Language Processing tools...to study semantics (word correlations) in a collection of Persian poems...both modern and ancient...In the analysis step, we obtained very interesting and meaningful results regarding the correlation between poets and topics, their \textit{evolution through time}, as well as the correlation between the topics and the metre used in the poems.'' }
 }
 
-@ONLINE{m-w,
-   AUTHOR  = {Merriam-Webster, Incorporated},
-   TITLE   = {Dictionary and Thesaurus – Merriam-Webster Online},
-   Month = dec,
-   Year = {2012},
-   NOTE = "Accessed on 2012-12-12",
-   URL = {http://www.merriam-webster.com/}
+@MISC{Krstovski2013efficient,
+  author  = {Krstovski, Smith and McGregor, Wallach},
+  title   = {Efficient Nearest-Neighbor Search in the Probability Simplex},
+  year    = {2013},
+  url     = {http://www.ccs.neu.edu/home/dasmith/krstovski-ictir-2013.pdf},
+  abstract  = {Document similarity tasks arise in many areas of information retrieval and natural language processing. A fundamental question when comparing documents is which representation to use. Topic models, which have served as versatile tools for exploratory data analysis and visualization, represent documents as probability distributions over latent topics. Systems comparing topic distributions thus use measures of probability divergence such as Kullback-Leibler, Jensen-Shannon, or Hellinger. This paper presents novel analysis and applications of the reduction of Hellinger divergence to Euclidean distance computations. This reduction allows us to exploit fast approximate nearest-neighbor (NN) techniques, such as locality-sensitive hashing (LSH) and approximate search in k-d trees, for search in the probability simplex. We demonstrate the effectiveness and efficiency of this approach on two tasks using latent  Dirichlet allocation (LDA) document representations: discovering  relationships between National Institutes of Health (NIH) grants  and prior-art retrieval for patents. Evaluation on these tasks and on  synthetic data shows that both Euclidean LSH and approximate k-d tree search perform well when a single nearest neighbor must be  found. When a larger set of similar documents is to be retrieved,  the k-d tree approach is more effective and efficient. },
+  annote = {This paper describes a novel approach to the analysis and applications of ``the Hellinger divergence to Euclidean distance computations.'' It demonstrates that this exploitation can lead to an effective and efficient approach. The approach's effectiveness and efficiency is compared to a 1-NN and k-d tree approach. For 1-NN, it approximates the k-d tree search. LDA document representations are used.}
 }
 
-@ONLINE{Dictionary.com,
-   AUTHOR  = {Dictionary.com LLC},
-   YEAR    = {2012},
-   TITLE   = {Dictionary.com},
-   Month = dec,
-   Year = {2012},
-   NOTE = "Accessed on 2012-12-12",
-   url = {http://www.dictionary.com/}
+@InProceedings{snyder-EtAl:2013:Demos,
+  author    = {Snyder, Justin  and  Knowles, Rebecca  and  Dredze, Mark  and  Gormley, Matthew  and  Wolfe, Travis},
+  title     = {Topic Models and Metadata for Visualizing Text Corpora},
+  booktitle = {Proceedings of the 2013 NAACL HLT Demonstration Session},
+  month     = {June},
+  year      = {2013},
+  address   = {Atlanta, Georgia},
+  publisher = {Association for Computational Linguistics},
+  pages     = {5--9},
+  url       = {http://www.aclweb.org/anthology/N13-3002},
+  abstract  = {Effectively exploring and analyzing large text corpora requires visualizations that provide a high level summary. Past work has relied on faceted browsing of document metadata or on natural language processing of document text. In this paper, we present a new web-based tool that integrates topics learned from an unsupervised topic model in a faceted browsing experience. The user can manage topics, filter documents by topic and summarize views with metadata and topic graphs. We report a user study of the usefulness of topics in our tool.},
+  annote = {This paper focuses on visualizing topics learned form a topic model in a web interface. This allows the user to ``manage topics, filter documents by topic and summarize views with metadata and topic graphs.'' A user study shows the usefulness of topics in the tool. However, the user study might actually be measuring the usefullness of the topic model rather than the tool, unless the web interface filters by default.}
 }
 
-@ONLINE{enlisch-hilfen,
-   AUTHOR  = {Englisch-hilfen.de},
-   TITLE   = {Opposites-Vocabulary-Learning English},
-   Month = dec,
-   Year = {2012},
-   NOTE = "Accessed on 2012-12-12",
-   url = {http://www.englisch-hilfen.de/en/words/opposites1.htm}
+@inproceedings{Wang:2006:TOT:1150402.1150450,
+  author = {Wang, Xuerui and McCallum, Andrew},
+  title = {Topics over Time: A non-Markov Continuous-time Model of Topical Trends},
+  booktitle = {Proceedings of the 12th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},
+  series = {KDD '06},
+  year = {2006},
+  isbn = {1-59593-339-5},
+  location = {Philadelphia, PA, USA},
+  pages = {424--433},
+  numpages = {10},
+  url = {http://doi.acm.org/10.1145/1150402.1150450},
+  doi = {10.1145/1150402.1150450},
+  acmid = {1150450},
+  publisher = {ACM},
+  address = {New York, NY, USA},
+  keywords = {graphical models, temporal analysis, topic modeling},
 }
 
-@ONLINE{bean_2012,
-   AUTHOR  = {Michael G. Bean},
-   YEAR    = {2012},
-   Month = dec,
-   TITLE   = {Psychological Reality of Antonyms for Non-Modified English Nouns: A Preliminary Qualitative Psycholinguistic Study on Societally-Determined Antonyms},
-   url = {http://students.cs.byu.edu/$\sim$bean5/Opposites-Bean-2012.docx}
+@inproceedings{crain2010dialect,
+  title={Dialect topic modeling for improved consumer medical search},
+  author={Crain, Steven P and Yang, Shuang-Hong and Zha, Hongyuan and Jiao, Yu},
+  booktitle={AMIA Annual Symposium Proceedings},
+  volume={2010},
+  pages={132},
+  year={2010},
+  organization={American Medical Informatics Association}
 }
 
-@ARTICLE{Wierzbicka,
-   AUTHOR  = {Anna Wierzbicka},
-   YEAR    = {2009},
-   TITLE   = {Universal Semantic Primitives as a Basis for Lexical Semantics},
-   JOURNAL = {Folia Linguistica}
-}
-
-@BOOK{Wilbur,
-   AUTHOR  = {Richard Wilbur},
-   YEAR    = {1921},
-   TITLE   = {Opposites},
-   PUBLISHER   = {New York: Harcourt Brace Jovanich}
-}
-
-
-% Jul 2004
-@ARTICLE{Zhang,
-   AUTHOR  = {Zhang, Jian-li and Jiang, Shu-zhen},
-   YEAR    = {Jul 2004},
-   TITLE   = {English Gradable Antonyms: Implicit Comparison and Explicit},
-   JOURNAL = {}
-}
-
-@ARTICLE{Comparison,
-   AUTHOR  = {Zhejiang Daxue Xuebao},
-   YEAR    = {},
-   TITLE   = {Comparison},
-   JOURNAL = {(Renwen Shebhui Kexue Ban)/Journal of Zhejiang University},
-   VOLUME  = {34},
-   NUMBER  = {4},
-   PAGES   = {124-130},
-   NOTE    = {(Humanities and Social Sciences Edition)}
+@book{van1980new,
+  title={New models in probabilistic information retrieval},
+  author={Van Rijsbergen, Cornelis J and Robertson, Stephen Edward and Porter, Martin F},
+  year={1980},
+  publisher={Computer Laboratory, University of Cambridge}
 }

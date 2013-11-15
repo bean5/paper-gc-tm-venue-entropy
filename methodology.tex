@@ -1,190 +1,165 @@
 \section {Methodology}
-Documents were prepared by being parsed and stored. While scripture passages are in themselves considered the largest unit of text in primary documents, the largest considered unit of text in our secondary documents is a column of a page (up to half the page). Optimal alignments, as demonstrated by gold alignments, are contained somewhere within a column while baseline alignments are placed at the end of the column.
+First data is prepared by being canonicalized, stemmed, and stored. Then we use collapsed Gibbs sampling to infer parameters for our model, Latent Dirichlet Allocation. We divide our data into disjoint venues, then apply metrics on the estimated parameters of our model. We employ entropy to show how a venue narrows/broadens over time. This is graphed for easy interpretation. We normalize topic distributions for key time spans and graph the values of the resulting normalized topic probability mass over time. Lastly, we apply Jensen-Shannon divergence between pairs of venues to visualize how different/similar the venues are. This is also graphed over time for analysis.
 
-The reason that scripture passages are considered to be primary documents is simple: they pre-date the secondary documents, sometimes by centuries. Thus all old documents (scriptural cannon in this case) are collectively grouped as \textit{primary documents} while those that are known to possibly contain imitations of the primary documents are collected as \textit{secondary documents}.
+\subsection{Data}
+Discourses are taken from the LDS %\footnote{The Church of Jesus Christ of Latter-day Saints; members of said church are often referred to as ``Mormons'' and although they are okay with this nomenclature, it is a conflated term that is applied to offshoot religions that are very different from the original branch.}
+General Conference (GC)\footnote{The LDS members convene during GC to hear from authorities and selected members of their church to be uplifted and edified together. Important announcements such as large-scale changes are diseminated in these conferences when appropriate. A recent change in minimum age for missionary service for the church is one example.} from 1942 to 2013. There are traditionally general conferences per year: one in April and one in October. Most sessions are considered general and are for meant for all members of the church, while some are gender-specific. Interestingly, sessions that are for the women in the church \footnote{``The Relief Society is the oldest and largest women's organization in the world. Relief Society was established in 1842 for women 18 years of age and older. Its purpose is to build faith and personal righteousness, strengthen families and homes, and help those in need.'' \cite{mormon.org-rs}} are generally held \~1 month prior to the general sessions. This means that the women's sessions are broadcasted in March and September. Women speakers are more prevalent, of course, at the women's sessions, so it is important for these discourses to be in the dataset. For purposes of venue grouping, they are treated as having occurred 1 month later; this means taht March women's sessions will be grouped with April general sessions, and likewise the September session will be grouped with the October general session. 
 
-The data is canonicalized, then we run various versions of genetic algorithms over the pairings of imitated and imitator to produce initial alignments. Algorithms are compared by computing their mean absolute mean (MAE).
-The underlying difference between each model is that each differs from another in at least 1 parameter: word order (forward/reverse), and synonymy strictness level (off/1/2/3).
+\subsection{Data Preparation}
+Our dataset is by no means free of noise. Our texts are derived from over 73 years of broadcasted religious discourse. Over this time, language is sure to have changed (except for the majority of specialized religious words). The speakers of the church have varied in type of discourse as well (extemporaneous vs. prepared). Gender is sure to play a role in some of the `noisiness' of the data when viewed as a whole not only because of preferences in speech but because the probability that certain genders are given opportunity vary from year to year. By preparing the data for the algorithm, it is hoped that end result is a clearer picture of the noisy data.
 
-Second, we feed the output of these algorithms, along with metadata such as \# of matches, \# of indels, etc., into machine learning models: (1) simple regression perceptron, and (2) the regressive version of the back-propagation-trained multi-layer perceptron (BP-MLP). We compare these to determine whether machine learning was beneficial to the alignments. We will refer to (1) as `perceptron' and (2) as BP-MLP.
+%By splitting the data into pre-defined venues, it is hoped that the information, particularly the topical distribution, can be more greatly appreciated. 
 
-Third, we use half of the genetic algorithms to produce input into another BP-MLP. This model ends up producing an even lower error than any of the genetic alignments used alone as input into a machine learning model.
+%A careful analysis of the trends and results will prove that although not free of noise, there is plenty of interesting information contained in religious documents, both old and new. Indeed, the fact that the probability mass of each topic will change over time is central.
 
-\subsection{Gold Standard}
-\subsubsection{Primary/Imitated Documents}
-Our primary source documents contained scriptural passages from the following scriptural canons:
-	\begin{itemize}
-		\item \textit{King James Bible},
-		\item \textit{Joseph Smith Translation of the Bible},
-		\item \textit{The Book of Mormon} (LDS\footnote{Acronym for ``The Church of Jesus Christ of Latter-day Saints''. The LDS are sometimes referred to as ``Mormons''.}),
-		\item \textit{The Doctrine \& Covenants} (LDS), and
-		\item \textit{The Pearl of Great Price} (LDS). 
-	\end{itemize}
+%Although noisy at first, by separating which could otherwise be considered as noise that would confound models, can be separated and treated as a venue for further analysis hopefully allowing the data to speak for itself.
 
-\subsubsection{Secondary/Imitating Documents}
-As for secondary documents, our documents consisted of all discourses in the \textit{Journal of Discourses} up through volume 10. In total, there are $\JoDPagesTotal$ columns and over $\JoDCitationsTotal$ citations in our gold standard.
+%Certainly there is room for topics to vary in popularity over the course of 73 years, but so will language, preference for discourse type (extemporaneous, prepared, long-quoted). 
 
-Our gold standard contains the right end of the alignments for class for each imitation instance. This, is used as the target for the regression BP-MLP. %The BP-MLP achieves lower error rates for every class and subsequently a lower error rate than any genetic algorithm alone. %This method has promise and could be extended to areas where both ends of the alignment can be used.
+\subsubsection{Canonicalization}
+Since many of our documents are dated before the 19th century, punctuation is often inconsistent; we therefore opt to ignore it except to aid in parsing. We do this for all documents. Furthermore, we lower-case all text. %Words are parsed based on whitespace and punctuation, including \textit{'s}; so graphemes such as \textit{word's} are parsed as two words: \textit{word}, \textit{s}. 
 
-%Our standard also includes labels for class for each imitation instance, which allows us to interpolate, in a way, using a BP MLNN to decrease our error rates. This method has promise and could be extended to areas where both ends of the alignment can be used.
+\subsubsection{Stemming}
+%We do not use stemming as LDA can handle as it might cause conflation of morphemes as was aptly noted by \cite{xyz}.
+We stem words using the Java 7 port of Java 6 Porter Stemmer which was available online \cite{github-bean5-porter7}; the Java 6 implementation was buggy in Java 7. In English, this stemmer allows words of different tenses to be simplified to a shorter, simpler form \cite{van1980new}. The porter stemmer algorithm is not perfect, but it is a straight-forward. A lemmatizer might perform better than a stemmer on this task, but we leave exploration in this space to future work. Beyond stemming and canonicalization, words are unchanged.
 
-\subsubsection{Documents, Citations, and \& Alignment Format}
-The alignments we have include the right end of alignments\footnote{We plan to insert scripture citation references at these positions so readers of the Journal of Discourse can benefit from them.. These were hand-aligned by Dr. Galbraith using the online tool which Dr. Liddle produced}.
+\subsubsection{Stopwording}
+As is common in LDA models that whose parameters are estimated using gibbs sampling, we remove/ignore stopwords. Besides typical English stopwords such as `the' and `it', we ignore the following words while applying gibbs sampling: \textit{god, jesus, christ, father}. These words have term frequency--inverse document frequency (TF-IDF) \cite{wiki:tf-idf} scores that approach 1. These words were discovered by using Luke to perform queries over a Lucene index \cite{lucene:luke}.
 
-Our gold standard also includes the classification of type of imitation. Our types are listed in table \ref{tab:imitation-types}. Future work might find that fewer or more classes exist.
+\subsubsection{Format}
+Discourses are stored as comma-delimited words in JSON format in a MySQL database. %Although order doesn't matter for gibbs sampling over LDA, we maintain the original order %Since order of words does not matter, we allow words to be in a 
 
-\begin{table}[center]
-	\begin{center}
-		\begin{tabular}{|c|l|} \hline
-			\textbf{Imitation Type}	& \textbf{Description}		\\ \hline \hline
-			1						& Exact Quote				\\ \hline
-			2						& Near-exact Quote			\\ \hline
-			3						& Fragment					\\ \hline
-			4						& Lazy quote				\\ \hline
-			5						& Paraphrase				\\ \hline
-			6						& Allusion					\\ \hline
-		\end{tabular}
-	\end{center}
-	
-	\caption{Imitation Types}
-	\label{tab:imitation-types}
-\end{table}
+%\subsubsection{Synynomy}
+%Ideally, synonymy would be as easy as submitting a tuple of words as a query to a thesaurus simply to receive a boolean back. However, this cannot be done with ease, especially when dealing with documents that are older or have wide date mismatches because language often changes over time (synonyms are not exempt). The problem is exascerbated by the fact that without parts of speech or word-sense disambiguation, the correct synset is difficult to locate without using morphological cues. Intuition seems to indicate that such methods would be helpful, but we opted to ignore them and go for various methods of synonymy matching. Since we do not aim to obtain the best single variation of a genetic algorithm, we can simply have various versions of synset matching and allow higher-order machine learning (ML) models learn to ignore that which is not helpful! A further intuition is that upon imitating, an orator might be influenced by an original document in such a way that he/she uses a synonym, hypernym, or hyponym rather than a word itself. The intuition/assumpt here is that by varying strictness of synonymy, each model might end up being better for particular imitation types.
 
-%Proving the validity or merit of such classifications is left to future work. 
+%We have 4 versions of synset matching. One is synonymous with synset matching being turned off. Another was built to be very strict, providing low recall at the expense of precision. The remaining 2 simply aimed to be significantly different from being off or strict, providing varying levels of precision and recall. (Optimizing the set of synset matching methods is a topic for future research.) Our levels are as follows:
 
-Baseline errors are computed using the distance from the last word in a column to the gold standard end position for each imitation.
+%\begin{description}
+%	\item [Level 0]: Word strings must match perfectly to be considered synonyms (i.e. synonymy is turned off)
+%\end{description}
 
-\subsubsection{Data Preparation: Cannonicalization}
-Since many of our documents are dated before the 19th century, punctuation is often inconsistent; we therefore opt to ignore it. We do this for all documents. Furthermore, we lower-case all text. Beyond this, there is no more cannonicalization nor stop-wording. Words are parsed based on whitespace and punctuation, including \textit{'s}; so graphemes such as \textit{word's} are parsed as two words: \textit{word}, \textit{s}. %Future work: except when stemming, which is only used in one of the algorithms we use.
+%\textit{WordNet} \cite{wordnet_1998} was used to query for obtaining synsets---including hypernyms and hyponyms. The WordNet morphology boolean was set to false for all queries. 
 
-\subsection{Algorithm Variations}
-We used 8 variations of the \textit{Needleman-Wunsch} genetic algorithm. Settings are adjusted one at a time, producing 8 total genetic alignment algorithms. The set of adjustable settings included: reversing the primary documents, %stemming (using the Porter Stemmer), and 
-and varying the requirements for acceptable synset overlap. Genetic action costs were held fixed between all runs of genetic alignment and were as follows:
+%Since part of speech tagging and word-sense disambiguation was not performed, the query for synsets always assumed words were nouns. Obviously, this is not the case, so there is definitely room for improvement in our method.
+%Since this is not the case, we decrease \textit{recall} by blacklisting certain English words---particularly modal verbs. Our blacklist also included strings such as ``\&c.'' (etc.) which appeared to easily be counted as synonyms of words when in fact they were not. Our blacklist is as follows: \textit{has, can, had, might, would, should, will, shall, have....(xyz list all.)}
 
-	\begin{itemize}
-		\item \textit{Match}: 3
-		\item \textit{Indel}: -4
-		\item \textit{Replace}: -2
-%		\item \textit{}: 
-	\end{itemize}
+\subsection {Model}
+We used a generative topic model known as Latent Dirichlet Allocation (LDA) \cite{Blei:2003:LDA:944919.944937}. It allows for multiple topics to be contained within a document by allowing each word instance (excluding stopwords) to be assigned 1 of K topics. This means that there is a topic distribution for each document. LDA explicitly models a topical distribution over all words as well. %Although other models can be used to cluster documents, this work aims to cluster subsets of documents. such as those often used by EM, allowing for multiple topics per document seems more appropriate. Careful selection of algorithm will allow for the model to speak for the data.
 
-In all cases, trailing indels and replaces are trimmed from alignments until the outermost matches of the alignments are reached. %We assume that deletions are artifacts of the fact that speakers/discoursants don't always stop producing text after imitating a primary document. 
-The idea (or assumption\footnote{No research seems free of \textit{assumptions}.}) behind this is that the last match is more likely to be an end alignment position than a replace or indel\footnote{Researching this further is certainly a viable topic for future work.}.
-The positions of these matches serve as indicators of proposed alignment positions. These are what we use we computing error metrics. The genetic actions between these matches are used to derive meta-data such as total number of matches, total indels, total replaces, and length of match.
+\subsection {Algorithm}
 
-%\subsubsection{Needleman-Wunsch}
-%[More on this. Cite it, link to it.]
+\subsubsection{Collapsed Gibbs Sampling}
+We use collapsed Gibbs sampling to infer the parameters of LDA \cite{Blei:2003:LDA:944919.944937}. Given hyperparameters and some parameters, the sampling algorithm outputs estimates for the unknown parameters (theta, phi). Collapsed Gibbs sampling provides only point-estimates of the parameters; this is sufficient for this work. 
 
-\subsubsection{Document Reverse}
-The idea behind reversing a document is to allow it to capture paraphrase or out-of-order quoting. Our method is naive and simply reverses the order of the words, but another viable method might be to reverse the order of sentences while maintaining word order within them. We leave this to future work. For type 2 imitations this ends up making a positive difference in error rates.
+\subsubsection{Hyperparameters}
+For the number of topics, K, we start with 50, but then settle to a lower number after some trial and error. We use uninformed hyperparameters:each value in the alpha vector is $0.2$; values of the beta matrix are uniformly set to $1/K$.
 
-%\subsubsection{Stemming}
-%We use the Java 7 port of Java 6 Porter Stemmer which was available at https://github.com/~bean5/Java-Porter-Stemmer as the Java 6 implementation was buggy in Java 7.
-
-%Stemming allows words of different tenses, but related etymology to count as matches to the genetic algorithm. 
-
-\subsubsection{Synynomy}
-Ideally, synonymy would be as easy as submitting a tuple of words as a query to a thesaurus simply to receive a boolean back. However, this cannot be done with ease, especially when dealing with documents that are older or have wide date mismatches because language often changes over time (synonyms are not exempt). The problem is exascerbated by the fact that without parts of speech or word-sense disambiguation, the correct synset is difficult to locate without using morphological cues. Intuition seems to indicate that such methods would be helpful, but we opted to ignore them and go for various methods of synonymy matching. Since we do not aim to obtain the best single variation of a genetic algorithm, we can simply have various versions of synset matching and allow higher-order machine learning (ML) models learn to ignore that which is not helpful! A further intuition is that upon imitating, an orator might be influenced by an original document in such a way that he/she uses a synonym, hypernym, or hyponym rather than a word itself. The intuition/assumpt here is that by varying strictness of synonymy, each model might end up being better for particular imitation types.
-
-We have 4 versions of synset matching. One is synonymous with synset matching being turned off. Another was built to be very strict, providing low recall at the expense of precision. The remaining 2 simply aimed to be significantly different from being off or strict, providing varying levels of precision and recall. (Optimizing the set of synset matching methods is a topic for future research.) Our levels are as follows:
-
-\begin{description}
-	\item [Level 0]: Word strings must match perfectly to be considered synonyms (i.e. synonymy is turned off)
-	\item [Level 1]: xyz
-	\item [Level 2]: xyz
-	\item [Level 3]: xyz
-\end{description}
-
-%\vspace{5mm}
-%\indent{\textit{Words are synonymous iff they share at least 3 hyopnyms and/or hypernyms.}}
-%\vspace{5mm}
-
-\textit{WordNet} \cite{wordnet_1998} was used to query for obtaining synsets---including hypernyms and hyponyms. The WordNet morphology boolean was set to false for all queries. 
-
-Since part of speech tagging and word-sense disambiguation was not performed, the query for synsets always assumed words were nouns. Since this is not the case, we decrease \textit{recall} by blacklisting certain English words---particularly modal verbs. Our blacklist also included strings such as ``\&c.'' (etc.) which appeared to easily be counted as synonyms of words when in fact they were not. Our blacklist is as follows: \textit{has, can, had, might, would, should, will, shall, have....(xyz list all.)}
-
-
-\subsection{Imitation Data and Meta-data}
+\subsection{Data and Meta-data}
+We view the data as being divisible into 2 types of meta-data before application of sampling, and as 1 type of meta-data after application. Although these are somewhat arbitrary/contrived categories, they are interesting ways to think of the data and are meant to help intuit future work.
 
 \subsubsection{Intrinsic Meta-Data}
-From each alignment, we can derive the following \textbf{data}:
+For each document, we have or can derive the following meta-data:
 	\begin{itemize}
-		\item \textit{start/end position of alignment in primary/secondary documents},
-		\item \textit{alignment score}
+		\item \textit{date discourse was given};
+		\item \textit{time of year: April/October};
+		\item \textit{length of document}; and
+		\item \textit{the text itself}.
 	\end{itemize}
 
-From each alignment, we can derive the following \textbf{meta-data}:
-	\begin{itemize}
-		\item \textit{length of primary alignment, length of secondary alignment},
-		\item \textit{number of matches/replaces/indels in alignment},
-		\item \textit{length of aligment},
-		\item \textit{percentage of primary document matched}, and
-		\item \textit{average word length within alignment}
-	\end{itemize}
-
-Some of these are redundant in higher order models. For example, given the number of matches, replaces, and indels, the score can be computed. A BP-MLP shouldn't have a problem with a low-order computation like that. In our work, we opt to use the number of matches, number of indels, and the overall score (not replaces) since we found our data for replaces to be corrupt. Admittedly, this could cause a bit of a problem in the simple perceptron, but the BP-MLP should be able to handle it when given sufficient hidden nodes and layers.
+Although one can imagine building a model which conditions variables on such intrinsic data, similar to how one might condition a model on time or dialect---which is the case for \cite{Wang:2006:TOT:1150402.1150450} and \cite{crain2010dialect}, respectively---we do not condition variables in our model directly on any of this data. Instead, we use the same post-hoc method of Hall et al. in dividing the dataset after applying gibbs sampling. We will only divide data into venues based on gender and time of year. The possibility for future work which directly models more intrinsic data is viable.
 
 \subsubsection{Extrinsic Meta-Data}
-Although we do not leverage the use of extrinsic \textbf{meta-data} in our research here, we believe it is important to note that it exists. Intuition says that such meta-data would be \textit{very} helpful in optimizing our results in future work. Extrinsic meta-data which we had available included:
+Although we do not directly leverage the use of any extrinsic \textbf{meta-data} in our research here, with the exception of speaker's gender, we believe it is important to note that it exists. Intuition hints that accounting for these variables in the model could be of benefit, just as accounting for dialect would be helpful. Extrinsic meta-data which we have available include:
 	\begin{itemize}
+		\item \textit{Name, age, gender of speaker}; and
 		\item \textit{Speaker's Name}
 		\item \textit{Speaker's Age}
+		\item \textit{Speaker's Gender}
 		\item \textit{Speaker's Church Position/Assignment}
-		\item \textit{Volume \#}
-		\item \textit{Discourse \#}
 		\item \textit{Date}
 	\end{itemize}
 
-\subsection{Tools/Parameters for ML Models}
-Weka \cite{weka_2009} was our tool of choice for using our ARFF dataset to perform machine learning. We used the following functions and settings for our ML models:
-\begin{enumerate}
-	\item 10-fold cross validation for both perceptron and BP-MLP
-	\item Perceptron: Simple Linear Regression
-	\item BP-MLP: learning rate of 0.3, 0.2 momentum, and 2000 training time
-\end{enumerate}
+\subsubsection{Postrinsic Data}
+Upon applying gibbs sampling, we can obtain and/or estimate:
+	\begin{itemize}
+		\item \textit{topic assignments for each non-stopword of each document};
+		\item \textit{topic distribution within each document};
+		\item \textit{topic distribution within each venue};
+		\item \textit{entropy of each venue for each session of GC \textbf{overall and for each year}}; and
+		\item \textit{Jensen Shannon divergence between each pair of venues, described in section \ref{venues} \textbf{for each year}}.
+	\end{itemize}
 
-\subsection{Metric}
-Since our gold standard only contains right ends of alignments, we produce error rates based on those. This does not mean, however, that we do not use the left ends of alignments. Indeed, we could use them as inputs to the BP-MLP as it is a form of meta-data which might be helpful.
+%\subsection{Tools/Parameters for ML Models}
+%Weka \cite{weka_2009} was our tool of choice for using our ARFF dataset to perform machine learning. We used the following functions and settings for our ML models:
+%\begin{enumerate}
+%	\item 10-fold cross validation for both perceptron and BP-MLP
+%	\item Perceptron: Simple Linear Regression
+%	\item BP-MLP: learning rate of 0.3, 0.2 momentum, and 2000 training time
+%\end{enumerate}
 
-We use mean absolute error (MAE) for all errors. For machine learning models, 10-fold cross validation errors are reported. Table \ref{tab:variable_assignments} shows the assignments of variables in the MAE formula.
-
-\begin{center}
-	MAE=$\frac{1}{n}\sum_{i=1}^{n}{|(e_i-\overline{e_i})|}$
-\end{center}
+\subsection{Metrics: Post-hoc Analysis}
+Similar to \cite{hall-jurafsky-manning:2008:EMNLP}, we use the metrics described in Table \ref{tab:metric_purposes} with the notations described in Table \ref{tab:metric_notation}. These metrics allow us to show how a topic moves over time and how a venue is different/similar to another.
 
 \begin{table}[center]
 	\centering
 	\begin{tabular} {| l | l |}
-		\hline	\textbf{Variable} 	&	\textbf{Meaning} \\
-		\hline	n					&	id of imitation on page				\\
-		\hline	$e_i$				&	predicted position of imitation $i$	\\
-		\hline	$\overline{e_i}$	&	actual position of imitation $i$	\\ \hline
+		\hline	\textbf{Metric} 			& \textbf{Purpose} \\ \hline
+		\hline	Entropy						& show how topics trend from year to year;\\
+											& show how some venues broaden/shrink over time	\\
+		\hline	Jensen-Shannon Divergence	& compare venues overall \\
+											& compare venues on a per-session basis	\\ 
+		\hline
 	\end{tabular}
-	\caption{Variable Assignments in MAE}
-	\label{tab:variable_assignments}
+	\caption{Metrics and Purposes}
+	\label{tab:metric_purposes}
 \end{table}
-
-%\subsubsection{Accuracy vs. Error}
-
-\subsection{Genetic Algorithm Number}%for appendix
-We used a 3-level for-loop structure to vary the parameters of the genetic alignment algorithm to produce differing alignment algorithms---each one having its own preferences. 
-
-\subsubsection{Settings}
-Our 3-level for-loop having 2 settings for word order (forward/reverse) and 4 settings for synset strictness (off/1/2/3) results in 8 different algorithms. Table ~\ref{tab:settings} shows the settings used for each of them.%to achieve the lowest error for each imitation type.
 
 \begin{table}[center]
 	\centering
-	\begin{tabular} {|l | c | c |}
-		\hline	\textbf{Algorithm Number} & \textbf{Word Order} & \textbf{Synset strictness}\\
-		\hline	1	&	forward		&	off	\\
-		\hline	2	&	backward	&	off	\\
-		\hline	3	&	forward		&	1	\\
-		\hline	4	&	backward	&	1	\\
-		\hline	5	&	forward		&	2	\\
-		\hline	6	&	backward	&	2	\\
-		\hline	7	&	forward		&	3	\\
-		\hline	8	&	backward	&	3	\\ \hline
+	\begin{tabular} {| l | l |}
+		\hline	\textbf{Metric} 			&	\textbf{Notation}	\\ \hline
+		\hline	Entropy						&	$H(C)$				\\
+		\hline	Jensen-Shannon Divergence	&	$JS(C, C')$			\\ \hline
 	\end{tabular}
-	\caption{Genetic Alignment Algorithm Settings}
-	\label{tab:settings}
+	\caption{Metrics and notations, where $C$ is some venue, and $C'$ is another venue.}
+	\label{tab:metric_notation}
 \end{table}
+
+\subsubsection{Venue Grouping}
+\label{venues}
+Following the methodology of Hall et al. we group our data according to venue. Following are the disjoint venues:
+
+	\begin{description}
+		\item [gender venues] female/male
+		\item [semi-annual venues] April/October
+		\item [time-gender venues] female April, female October, male April, male October
+	\end{description}
+
+\subsubsection{Entropy Over Time}
+For sake of simplicity, the venues are all graphed according to the the largest time span in common: semi-annual.
+
+By graphing entropy over time, we get a sense of the general trends for each venue with respect to topic diversity. Lower entropy indicates a venue is less diverse than another. Following is the formula for entropy:
+
+\begin{center}
+$H(C) = - \sum_{c \in C} \;  p(c) \log p(c)$
+\end{center}
+
+\subsubsection{Topic Probability Mass Over Time}
+In each venue there is a distribution over topics. Like entropy, this can be graphed. This allows us to visualize how each topic varies in terms of popularity over time.
+
+\subsubsection{Jensen-Shannon Divergence Over Time}
+Since we have the probability distribution for topics in each venue, we can also compute a divergence between pairs of venues. This can also be graphed over time, allowing us to visualize the divergence. We use Jensen Shannon divergence (JS)\footnote{JS divergence is the symmetrical corrollary of Kullback-Leibler divergence}. Divergence values are proportional to the difference of the probability distributions. Thus a high divergence would indicate that two venues are different. Below is the formula for JS divergence, given two probability distributions, $P, Q$ where $M$ is the average of the two.
+
+\begin{center}
+$JS(P||Q) = 0.5 * KL(P||M) + KL(Q||M)$
+
+where $KL(P||Q) = \sum\limits_{i=1}^n \ln(\frac{P(i)}{Q(i)})$
+\end{center}
+We define $KL(P||Q)$ to be zero when $Q(i)=0$.
+
+
+%Although we do not aim to prove the merits of Gibbs sampling on LDA, we do want to impress upon the reader that goodness of the resulting estimations. For this task, we leverage existing classifiations as described in \ref{gold_standard} to compute an accuracy based hard assignments of topics. Although this is not optimal, it is the only clear way to leverage current gold-standard with the estimations that Gibbs outputs.
+
+%\subsection{Gold Standard}
+%\label{gold_standard}
+%Online, the LDS church has published a concordance of discourses and topics for the latest 5 conferences (ending at the October 2013 session). Although these topics tend to be at most 1 per document, we can force hard assignments by choosing the most common gibbs-estimated topic within each document. These are then used to compute an accuracy. Since this is novel work and we are not attempting to prove the goodness of gibbs itself, but rather the goodness of our estimated model, there is little recourse but to compute an accuracy based on the sparse, but approved and accepted classifications available online \cite{lds.org}.
