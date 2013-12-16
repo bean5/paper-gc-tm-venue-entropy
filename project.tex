@@ -3,31 +3,44 @@
 %\usepackage {apacite}
 \usepackage {graphicx}
 \usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{multicol}
+\usepackage{blindtext}
+\usepackage[margin=0.525in]{geometry}
 
 \def \oppnospace {$\sim$}
 \def \opp {$\sim$ }
-\def \projectName {JoD genetic alignment}
+\def \projectName {Topic Modeling of LDS General Conference}
 \def \date {August 26, 2013}
 
 \begin{document}
-\def \JoDPagesTotal {2215}
-\def \JoDPagesGoldStandard {2215}
-\def \JoDCitationsTotal {11000}
+\def \TokenCount {3.1 million}
 
-\input {title}
+\title{Theological topics through time:\\
+An application of Gibbs-sampled LDA and post-hoc metrics to compare religious venues}
+
+%\today{September 30, 2013}
+\author{Michael Bean, M.A. Linguistics student\\
+Dr. Eric Ringger, Computer Science
+\\
+\\
+Brigham Young University
+}
+\maketitle
+%Description here
 %\clearpage
 
 %\input {abstract}
 \input {introduction}
 %\input {sides}
-\input {prior-work}
+%\input {prior-work}
 \input {methodology}
 %\input {test-items}
-%\input {results}
-%\input {conclusion}
-%\input {future-work}
+\input {results}
+\input {conclusion}
+\input {future-work}
 \input {acknowledgements}
 \input {citations}
-%\input {appendix}
+\input {appendix}
 
 \end{document}
