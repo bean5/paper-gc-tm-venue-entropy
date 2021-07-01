@@ -1,12 +1,14 @@
-build:
-  build: .
-  command: make project
-  working_dir: /main
-  volumes:
-    - './:/main'
-shell:
-  build: .
-  command: bash
-  working_dir: /main
-  volumes:
-    - './:/main'
+version: '3'
+services:
+  build:
+    build: .
+    command: make project
+    working_dir: /main
+    volumes:
+      - './:/main'
+  shell:
+    build: .
+    command: bash
+    working_dir: /main
+    volumes:
+      - './:/main'
